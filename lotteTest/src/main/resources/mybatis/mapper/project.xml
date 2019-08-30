@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.project.mapper.ProjectMapper"> 
+    <select id="selectListProject" resultType="com.example.demo.project.vo.ProjectVO">
+    	select 
+    	idx as idx,
+    	title as title,
+    	owner_id as ownerId,
+    	owner_name as ownerName,
+    	start_date as startDate,
+    	end_date as endDate
+    	from project_tb
+    </select>
+    
+    <insert id="insertProjectTask">
+    	insert into project_task_tb(project_idx, project_title, username, grade, task_category, importance, written_id, written_date) values(
+    	#{projectIdx}, #{projectTitle}, #{username}, #{grade}, #{taskCategory}, #{importance}, #{writtenId}, NOW())
+    </insert>
+    
+    <insert id="insertProjectSetting" useGeneratedKeys="true" keyProperty="idx">
+    	insert into project_tb(title, owner_id, owner_name, start_date, end_date, written_id, written_date) values(
+    	#{title}, #{ownerId}, #{ownerName}, #{startDate}, #{endDate}, #{writtenId}, NOW())
+    </insert>
+    
+    
+     <select id="selectOneProject" resultType="com.example.demo.project.vo.ProjectVO">
+    	select 
+    		idx as idx,
+    		title as title,
+    		owner_id as ownerId,
+    		owner_name as ownerName,
+    		start_date as startDate,
+    		end_date as endDate
+    	from project_tb where idx = #{idx}
+    </select>
+    
+    <select id="selecListTask" resultType="com.example.demo.project.vo.TaskVO">
+    	select
+    		a.project_idx as projectIdx,
+    		a.username as username,
+    		b.name as name,
+    		b.grade as grade,
+    		a.task_category as taskCategory,
+    		a.importance as importance 
+    	from project_task_tb a, user_tb b where a.username = b.username and project_idx = #{idx}
+    </select>
+    
+    <delete id="deleteTask">
+    	delete from project_task_tb where project_idx = #{idx}
+    </delete>
+
+    
+    <select id="selecListUserTask" resultType="com.example.demo.project.vo.TaskVO">
+    	select
+    		a.project_idx as projectIdx,
+    		c.title as projectTitle,
+    		a.username as username,
+    		b.name as name,
+    		a.task_category as taskCategory,
+    		a.importance as importance 
+    	from project_task_tb a, user_tb b, project_tb c where a.username = b.username and a.username = #{username} and a.project_idx = c.idx
+    </select>
+    
+ 
+    
+    <select id="selectCountBeforeStart" resultType="int">
+    	select count(*) from project_tb where start_date > NOW()
+    </select>
+    
+ 	<select id="selectCountFinished" resultType="int">
+    	select count(*) from project_tb where NOW() > end_date
+    </select>
+    
+    <select id="selectCountProceeding" resultType="int">
+    	select COUNT(*) FROM project_tb where NOW() >= start_date and end_date >= NOW()
+    </select>
+</mapper>

@@ -1,0 +1,347 @@
+/*================================================================================
+	Item Name: Materialize - Material Design Admin Template
+	Version: 4.0
+	Author: PIXINVENT
+	Author URL: https://themeforest.net/user/pixinvent/portfolio
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN CSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important !important;
+}
+
+@media only screen and (min-width: 0) {
+  .signup-form {
+    width: 320px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .signup-form {
+    width: 640px;
+  }
+}
+
+.jsgrid {	
+	overflow: visible !important;
+}
+
+
+.jsgrid-grid-header {
+	overflow: visible !important;    
+}
+
+.jsgrid-grid-body{
+	overflow: visible !important;
+}
+
+/*    
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
+	opacity: 1 !important;
+	pointer-events: all !important;
+}
+*/
+.listAsset_custom_tabs{
+	background-color: rgba(0,0,0,0) !important;
+    margin-bottom: 10px;
+}
+  
+#listAsset_my_asset:hover, #listAsset_rent_asset:hover{
+	cursor: pointer !important;
+}
+
+.profile_div {
+	padding-left: 72px;
+    position: relative;
+}
+
+.profile_img {
+	position: absolute;
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.rndms_button {
+	margin-right: 1% !important;
+}
+
+.common_reject_btn, .common_btn .reject_btn .approve_btn{
+	float: right !important;
+	margin-left: 1%;
+}
+
+
+.jsgrid-table{
+	width:100% !important;
+}
+
+#return_btn, #rent_btn {
+	float: right !important;
+	margin-left: 2%;
+}
+
+.detail_custom_rentApproval{
+	display: inline-block;
+	position:relative;
+	top: 20px;
+	right: 46%;
+}
+
+.detailAsset_custom_radiobox{
+	display:inline-block; 
+	float:left;
+}
+
+.select2 {
+    margin-bottom: 30px !important;
+}
+
+.dd {
+	max-width: none !important;
+}
+
+.dd-handle {
+	height: 50px !important;
+}
+
+.dd-nodrag {
+    display: block;
+    height: 30px;
+    margin: 5px 0;
+    padding: 5px 10px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 700;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 50px !important;
+}
+
+.dd-list {
+	list-style: decimal !important;
+	padding-left: 30 !important;
+}
+
+.dd-empty, .dd-item, .dd-placeholder {    
+    font-size: 20px !important;
+    line-height: 40px !important;
+    display: list-item !important;
+}
+
+.nestable-delete {
+	color: #9e9e9e;
+	font-size: 18px;
+	position: absolute;
+	right: 16px;
+	top: 14px;
+}
+
+.message-delete {
+	color: #9e9e9e;
+	font-size: 18px;
+	position: absolute;
+	right: -8px;
+	top: -5px;
+}
+
+.relative-li {
+	position: relative;
+}
+
+.select2-container--disabled > .selection > .select2-selection > .select2-selection__rendered {	
+	color: rgba(0, 0, 0, 0.42);
+}
+
+h6.header {
+	line-height: 2.508rem;
+    margin: 0 0 0 0.7rem;
+}
+
+.expandable-team {
+    border-top: 0px solid #ddd !important;
+    margin: 0 0 0 0 !important;
+}
+
+.expandable-team-body {
+	padding: 0rem !important;
+	padding-left: 2rem !important;
+	border-bottom: 0px solid #ddd !important;
+}
+
+.sweet-alert {
+	overflow: visible !important;
+}
+
+.sweet-alert .input-field input {
+	display: block !important;
+}
+
+.home-collection {
+	height: 562;
+}
+
+.home-collection-content {
+	height:475;
+	-ms-overflow-style: none;
+}
+
+.active-scroll {	
+	overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+.meeting-modal-table th{
+	 text-align: center;
+}
+
+.meeting-modal {
+    max-height: 100% !important;
+    width: 60%;
+    position: absolute;
+}
+	
+@media only screen and (max-width: 992px) {
+	.meeting-modal {	
+	    width: 90% !important;
+	}	
+	
+	.dropdown-content {
+	    max-width: 80%;
+	}
+	
+	#messages {
+	    max-width: 100%;
+	}
+	
+	#notifications-dropdown li > a {
+	    white-space: pre-line;
+        line-height: 2.0;
+	}
+	
+	.jsgrid-grid-header {
+		overflow: scroll !important;    
+	}
+	
+	.jsgrid-grid-body{
+		overflow: scroll !important;
+	}
+}
+
+
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-bottom: 6px;
+}
+
+
+.loader-image {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: url(/resources/rndms/images/logo/img_symbol_logo.png) no-repeat center center;
+    z-index: 1001;
+	-webkit-transform: translate(-50%, -50%) !important;
+    -ms-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.loaded #loader-wrapper .loader-image {
+  visibility: hidden;
+}
+
+.labinfo {
+	margin: 0 !important;
+}
+
+.tabs .tab a {
+    font-size: 20px !important;
+}
+
+.teamJsGrid [type="checkbox"]{
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+#jsgrid_progress .jsgrid-align-center {
+    text-align: center;
+}
+
+.rndms-file-download {
+	background: #fff8e1;
+    padding: 8;
+}
+
+.rndms-floating-btn {
+    position: fixed;
+    bottom: 25px;
+    width: 75%;
+    right: 25px;
+    padding-top: 15px;
+    margin-bottom: 0;
+    z-index: 997;
+}
+
+.left-profile-image {
+	width: 52px !important;
+	height: 52px !important;
+}
+
+.user-roal {
+	font-size: 12px !important;
+	overflow: auto;
+    white-space: nowrap;
+}
+
+.section {
+	padding-top: 0 !important;
+}
+
+#work-collections .collection-item.avatar {
+    padding-top: 10px !important;
+}
+
+.collection .collection-item.avatar {
+    min-height: 64px !important;
+}
+
+.margin-top-2 {
+	margin-top: 2rem;
+}
+
+.margin-top-2 label {	
+  color: #9e9e9e;
+  font-size: 1rem;
+  text-align: initial;
+}
+
+#jsGridProposal select {
+	height: 100% !important;
+	opacity: 1 !important;
+	position: relative !important;
+	pointer-events: all !important;
+}
+
+#jsGrid1 [type="checkbox"]{
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.approval-add-btn {
+    margin-top: -20px;
+    margin-bottom: 20px;
+}

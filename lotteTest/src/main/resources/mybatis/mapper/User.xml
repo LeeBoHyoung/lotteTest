@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.app.user.mapper.UserMapper">
+     <select id="readUser" resultType="com.example.demo.app.user.vo.UserVO">
+          SELECT * FROM user_tb WHERE username = #{username}
+     </select>
+     
+     <select id="readAuthority" parameterType="String" resultType="String">
+          SELECT authority_name FROM user_authority_tb WHERE username = #{username}
+     </select>
+    
+     <insert id="createUser" parameterType="com.example.demo.app.user.vo.UserVO">
+          INSERT INTO user_tb (username, password, name, email, grade, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled)
+                    VALUES (#{username}, #{password}, #{name}, #{email}, #{grade}, #{isAccountNonExpired}, #{isAccountNonLocked}, #{isCredentialsNonExpired}, #{isEnabled})
+     </insert>
+    
+     <insert id="createAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
+          INSERT INTO user_authority_tb (username, authority_name)
+                    VALUES
+                         <foreach item="item" index="index" collection="authorities" separator=",">
+                              (#{username}, #{item.authority})
+                         </foreach>
+     </insert>
+    
+     <delete id="deleteUser" parameterType="String">
+          DELETE FROM user_tb WHERE username = #{username}
+     </delete>
+    
+     <delete id="deleteAuthority" parameterType="String">
+          DELETE FROM user_authority_tb WHERE username = #{username}
+     </delete>
+     
+     <select id="selectUserList" resultType="com.example.demo.app.user.vo.UserVO">
+     	select * from user_tb
+     </select>
+     
+     <select id="selectUserListVO" resultType="com.example.demo.app.user.vo.UserListVO">
+     	select username, name from user_tb
+     </select>
+     
+     <update id="updateUser" parameterType="com.example.demo.app.user.vo.UserVO">
+     	update user_tb set grade=#{grade}, email=#{email} where username = #{username}
+     </update>
+     
+     <select id="selectUserInfo" resultType="com.example.demo.app.user.vo.UserVO">
+     	select
+     	username as username,
+     	name as name,
+     	grade as grade,
+     	email as email
+     	from user_tb where username = #{username}
+     </select>
+</mapper>

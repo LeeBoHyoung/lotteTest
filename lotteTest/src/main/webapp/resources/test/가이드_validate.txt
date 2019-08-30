@@ -1,0 +1,286 @@
+name : addremove
+js명 : jquery.validate.js
+dependency : jquery.js
+url : https://jqueryvalidation.org/
+
+캡쳐
+
+사용 예제
+[html]
+<!--각각의 폼 구성요소들은 id와 name이 동일해야 한다.-->
+<form class="cmxform" id="commentForm" method="get" action="">	
+	<p>
+		<label for="cname">username</label>
+		<input id="username" name="username" minlength="2" type="text" required>
+	</p>
+	<p>
+		<label for="cemail">pwd</label>
+		<input id="password" type="password" required>
+	</p>
+	<p>
+		<label for="curl">confir_pwd</label>
+		<input id="confirm_password" type="password" name="confirm_password">
+	</p>
+	<p>
+		<label for="ccomment">email</label>
+		<input id="email" type="text" name="email">
+	</p>
+	<p>
+		<label for="ccomment">뉴스레터</label>
+		<input id="newsletter" type="checkbox" name="newsletter">
+	</p>
+	<p>
+		<label for="ccomment">토픽</label>
+		<input id="topic" type="text" name="topic">
+	</p>
+	<p>
+		
+	</p>
+	
+</form>
+
+<input type='button' onclick="save()" value="Submit">
+
+[js]
+<script>
+	$.validator.setDefaults({
+		success: "valid"
+	});
+	
+	$().ready(function() {
+		
+		$("#commentForm").validate({
+			rules: {
+				username: {
+					required: true,
+					minlength: 2
+				},
+				password: {
+					required: true,
+					minlength: 5
+				},
+				confirm_password: {
+					required: true,
+					minlength: 5,
+					equalTo: "#password"
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				topic: {
+					required: "#newsletter:checked",
+					minlength: 2
+				}
+			},
+			messages: {
+				username: {
+					required: "Please enter a username",
+					minlength: "Your username must consist of at least 2 characters"
+				},
+				password: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 5 characters long"
+				},
+				confirm_password: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 5 characters long",
+					equalTo: "Please enter the same password as above"
+				},
+				email: "Please enter a valid email address",
+				agree: "Please accept our policy",
+				topic: "Please select at least 2 topics"
+			}, errorPlacement: function(error, element) {
+				console.log(error);
+				console.log(element);
+				console.log("----------------");
+			}, invalidHandler: function(form, validator) {
+				 var errors = validator.numberOfInvalids();
+				 if (errors) {
+					 alert(validator.errorList[0].message);
+					 validator.errorList[0].element.focus();
+				 }
+			}
+		});
+
+		
+	});
+	
+	
+	function save(){
+	$("#commentForm").valid();
+		//alert($("#commentForm").valid());
+	}
+</script>
+
+
+http://noritersand.tistory.com/211#footnote_link_211_1
+
+옵션 설명
+rules
+	- required 
+		.설명 : 필수 입력검증
+		.값 : true/false
+		.대상 : text, password, select, radio, checkbox 
+
+	- remote
+		.설명 : 서버에서 검증내용을 받아와 체크, 서버에서는 true, false를 리턴해 주면 된다.
+		e.g.
+			remote : {
+                url : "/checkUserId.do",
+                type : "post",
+                data : {
+                    username : function() {
+                        return $("#username").val();
+                    }
+                }
+            }
+
+	- equalTo
+		.설명 : 다른 항목과 같은지 체크
+		.값 : 다른오브젝트 ID, Name등 식별자
+		e.g.
+			equalTo: "#password"
+	- minlength
+		.설명:최소길이체크
+		e.g.
+			minlength: 3
+		
+	- maxlength
+		.설명 : 최대길이체크
+		e.g.
+			maxlength: 3
+	rangelength
+		.설명 : 길이 범위 체크. 
+		e.g.
+			rangelength:[2, 6] (2글자 이상 6글자 이하)
+	min
+		.설명 : 숫자의 최솟값 체크.
+		e.g.
+			min: 13 (13보다 작을 경우 false)
+	max
+		.설명 : 숫자의 최댓값 체크.
+		e.g.
+			max: 5  (5보다 클 경우 false)
+	range
+		.설명 : 숫자의 범위 체크.
+		e.g.
+			range: [13, 24] (13보다 작거나 24보다 클 경우 false)
+	email
+		.설명 : 이메일 형식의 값인지 체크.
+		e.g.
+			email: true
+	url
+		.설명 : 유효한 url 형식인지 체크.
+		e.g.
+			url: true
+	date(deprecated)
+		.설명 : 유효한 날짜 형식의 값인지 체크		
+	dateISO (https://ko.wikipedia.org/wiki/ISO_8601)
+		.설명 : 유효한 국제표준 날짜 형식인지 체크.
+		e.g.
+			dateISO: true
+	number
+		.설명 : 유효한 숫자인지 체크. 
+		e.g.
+			number: true
+	digits
+		.설명 : 유효한 digit 값인지 체크. number와 다른점은 양의 정수만 허용한다. 즉, 소수와 음수일 경우 false
+		e.g.
+			digits: true
+	step
+		.설명 : Makes the element require a given step.
+		e.g.
+			step: 10
+
+errorPlacement
+	- validtion 오류처리(정의하지 않으면 validator에서 label을 추가로 만듬.)
+invalidHandler
+	- validation 실패시 핸들러
+debug
+	- true일경우 validation후 submit수행하지 않음.
+onfocusout
+	- blur시에 항목을 validation할것인지 여부
+message
+	- rules에서 설정한 항목들에 대해 실패시 화면에 표시할 문자열정의
+submitHandler
+	- submit전에 처리할 핸들러 정의, 사용자 confirm, 데이터 재가공시 사용한다. false 리턴시 submit 중단.
+		
+		
+		
+중복코딩 제거 tip(validation묶기)
+[js]
+ // alias required to cRequired with new message
+ $.validator.addMethod("cRequired", $.validator.methods.required,
+   "Customer name required");
+ // alias minlength, too
+ $.validator.addMethod("cMinlength", $.validator.methods.minlength,
+   // leverage parameter replacement for minlength, {0} gets replaced with 2
+   $.validator.format("Customer name must have at least {0} characters"));
+ // combine them both, including the parameter for minlength
+ $.validator.addClassRules("customer", { cRequired: true, cMinlength: 2 });
+		
+[html]		
+ <input name="customer1" class="customer">
+ <input name="customer2" class="customer">
+ <input name="customer3" class="customer">
+		
+		
+custom validator만들기
+
+jQuery.validator.addMethod("greaterThanZero", function(value, element) {
+    return this.optional(element) || (parseFloat(value) > 0);
+}, "* Amount must be greater than zero");
+
+
+$('validatorElement').validate({
+    rules : {
+        amount : { greaterThanZero : true }
+    }
+});	
+		
+		
+		
+normalizer
+	- 유효성 검사전에 준비할 내용들을 작성한다.
+		
+		
+	e.g.
+		문자열 검사전에 공백제거
+		
+		rules: {
+			field: {
+			  required: true,
+			  normalizer: function( value ) {				
+				return $.trim( value );
+			  }
+			}
+		  }
+		
+		
+	e.g.
+		url검사전에 http://문자열 넣어주기
+		rules: {
+			url_input: {
+			  required: true,
+			  url: true,
+			  normalizer: function( value ) {
+				var url = value;
+		 
+				// Check if it doesn't start with http:// or https:// or ftp://
+				if ( url && url.substr( 0, 7 ) !== "http://"
+					&& url.substr( 0, 8 ) !== "https://"
+					&& url.substr( 0, 6 ) !== "ftp://" ) {
+				  // then prefix with http://
+				  url = "http://" + url;
+				}
+		 
+				// Return the new url
+				return url;
+			  }
+			}
+		  }
+		
+		
+		
+		

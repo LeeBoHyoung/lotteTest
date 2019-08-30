@@ -1,0 +1,95 @@
+name : addremove
+js명 : chamomile.addremove.js
+dependency : jquery.js, bootstrap.css
+
+캡쳐
+
+사용 예제
+[html]
+<div id="addremove" style='height:150px;'>
+							
+</div>		
+
+[js]
+new Chamomile.AddRemove(컨테이너, 왼쪽 selectbox 라벨 내용, 오른쪽 selectbox 라벨 내용);
+
+e.g.
+_addRemove = new Chamomile.AddRemove("#addremove", '미사용', '사용');
+
+기능목록
+addLeft
+	- 설명 : 왼쪽 selectbox에 값을 추가한다.
+	- param : 삽입할 데이터
+	- param format : [
+						{val : "value값1", text:"표시할 값1", fixed:true}
+						,{val : "value값2", text:"표시할 값2"}
+						,{val : "value값3", text:"표시할 값3"}
+					]
+					
+					*fixed : 움직이지 못하게 할 항목에 대해서 true로 설정함.
+
+addRight
+	- 설명 : 오른쪽 selectbox에 값을 추가한다.
+	- param : 삽입할 데이터
+	- param format : [
+						{val : "value값1", text:"표시할 값1", fixed:true}
+						,{val : "value값2", text:"표시할 값2"}
+						,{val : "value값3", text:"표시할 값3"}
+					]
+					
+					*fixed : 움직이지 못하게 할 항목에 대해서 true로 설정함.
+moveRight
+	- 설명 : 왼쪽 -> 오른쪽으로 이동. 단, fixed='true' 속성은 옮기지 않음
+	- param : N/A
+moveLeft
+	- 설명 : 오른쪽 -> 왼쪽으로 이동. 단, fixed='true' 속성은 옮기지 않음
+	- param : N/A
+	
+getRightValues	
+	- 설명 : 오른쪽에 데이터 목록을 가져온다.
+	- param : N/A
+getLeftValues	
+	- 설명 : 왼쪽 데이터 목록을 가져온다.
+	- param : N/A
+clearLeft	
+	- 설명 : 왼쪽 목록을 비운다.
+	- param : N/A
+clearRight	
+	- 설명 : 오른쪽 목록을 비운다.
+	- param : N/A
+		
+clear
+	- 설명 : 전부 비운다.
+	- param : N/A
+setLeft
+	- 설명 : 왼쪽 selectbox에 값을 넣어준다.(기존데이터 삭제)
+	- param : 삽입할 데이터
+	- param format : [
+						{val : "value값1", text:"표시할 값1", fixed:true}
+						,{val : "value값2", text:"표시할 값2"}
+						,{val : "value값3", text:"표시할 값3"}
+					]
+					
+					*fixed : 움직이지 못하게 할 항목에 대해서 true로 설정함.
+setRight
+	- 설명 : 오른쪽 selectbox에 값을 넣어준다.(기존데이터 삭제)
+	- param : 삽입할 데이터
+	- param format : [
+						{val : "value값1", text:"표시할 값1", fixed:true}
+						,{val : "value값2", text:"표시할 값2"}
+						,{val : "value값3", text:"표시할 값3"}
+					]
+					
+					*fixed : 움직이지 못하게 할 항목에 대해서 true로 설정함.	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

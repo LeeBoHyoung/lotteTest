@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html class="app">
+<head>
+<meta charset="utf-8" />
+
+
+<!--  datepicker -->
+<link rel="stylesheet" href="../js/datepicker/datepicker.css" type="text/css" />
+<link rel="stylesheet" href="../css/bootstrap.css" type="text/css" />
+<link href="../css/fine-uploader-new.css" rel="stylesheet">
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery-ui-1.11.3.js"></script>
+<script src="../js/jquery.validate.js"></script>
+<script src="../js/jquery.inputmask.bundle.js"></script>
+<script src="../js/phone.js"></script>
+<script src="../js/chamomile.common.js"></script>
+<!-- datepicker -->
+<script src="../js/datepicker/bootstrap-datepicker.js"></script>
+<style>
+span.required-mark { 
+  color: #FF5A5A;
+}
+</style>
+
+<!-- file uploader -->
+<script src="../js/jquery.fine-uploader.js"></script>
+<script type="text/template" id="qq-template-validation">
+        <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
+            <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+                <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+            </div>
+            <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+                <span class="qq-upload-drop-area-text-selector"></span>
+            </div>
+            <div class="qq-upload-button-selector qq-upload-button">
+                <div>Select files</div>
+            </div>
+            <span class="qq-drop-processing-selector qq-drop-processing">
+                <span>Processing dropped files...</span>
+                <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+            </span>
+            <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
+                <li>
+                    <div class="qq-progress-bar-container-selector">
+                        <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                    </div>
+                    <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                    <img class="qq-thumbnail-selector" qq-max-size="100" qq-server-scale>
+                    <span class="qq-upload-file-selector qq-upload-file"></span>
+                    <span class="qq-upload-size-selector qq-upload-size"></span>
+                    <button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
+                    <button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
+                    <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
+                    <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                </li>
+            </ul>
+
+            <dialog class="qq-alert-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">Close</button>
+                </div>
+            </dialog>
+
+            <dialog class="qq-confirm-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">No</button>
+                    <button type="button" class="qq-ok-button-selector">Yes</button>
+                </div>
+            </dialog>
+
+            <dialog class="qq-prompt-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <input type="text">
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">Cancel</button>
+                    <button type="button" class="qq-ok-button-selector">Ok</button>
+                </div>
+            </dialog>
+        </div>
+    </script>
+
+
+
+
+
+
+
+<script>
+	
+	$.validator.setDefaults({
+		//debug: true,
+		success: "valid"
+	});
+	
+	$().ready(function() {
+	
+		cmml._validateAddMethods();
+			
+		$("#commentForm").validate({
+			rules: {
+				username: {
+					required: true,
+					minlength4mbcs : 5,
+					maxlength4mbcs : 10
+				},
+				numbercheck: {
+					required: true,
+					number : true,
+					range : [1,10000],
+					normalizer: function( value ) {				
+						return cmml._masking.unmask("#numbercheck");
+					}
+					
+					
+				},
+				checkboxcheck: {
+					required: true
+				},
+				radiocheck: {
+					required: true
+				},
+				combocheck: {
+					required: true
+				},
+				moneycheck : {
+					required: true,
+					number : true,
+					range : [100,10000],
+					normalizer: function( value ) {				
+						return cmml._masking.unmask("#moneycheck");
+					}
+				},
+				rrncheck: {
+					required: true,
+					rrn : true
+				},
+				emailcheck: {
+					required: true,
+					email : true
+				},
+				datecheck: {
+					required: true,
+					dateEx : true
+				},
+				pwdcheck :{
+					accountpassword : {
+						minlength : 8,
+						uppper: true,
+						letter: true,
+						number: true,
+						specialchar: true,
+						repeatcount : 4,
+						excludeValue : ['#username','#numbercheck']
+					}
+				}
+			},
+			messages: {
+				username: {
+					required: "필수요소입니다.",
+					minlength4mbcs : "최소 5글자 이상이어야 합니다.",
+					maxlength4mbcs : "최대 10글자 이하여야 합니다."
+				},
+				numbercheck: {
+					required: "필수요소입니다.",
+					number : "숫자만 입력하세요",
+					range : "{0} ~ {1} 사이의 숫자만 유효합니다."
+				},
+				checkboxcheck: {
+					required: "약관에 동의해야 합니다."					
+				},
+				radiocheck: {
+					required: "성별을 선택해주세요"					
+				},
+				combocheck: {
+					required: "숫자를 선택하세요"					
+				},
+				moneycheck: {
+					required: "필수요소입니다",
+					number : "숫자만 입력하세요",
+					range : "{0} ~ {1} 사이의 금액을 입력하세요"					
+				},
+				rrncheck: {
+					required: "필수요소입니다",
+					rrn : "올바른 형식이 아닙니다."
+				},
+				emailcheck: {
+					required: "필수요소입니다",
+					email : "올바른 형식이 아닙니다."
+				},
+				datecheck: {
+					required: "필수요소입니다",
+					dateEx : "올바른 형식이 아닙니다."
+				},
+				pwdcheck :{
+					accountpassword : "pwd!!"
+				}
+			}/*, errorPlacement: function(error, element) {
+				console.log(error);
+				console.log(element);
+				console.log("----------------");
+			}*/, invalidHandler: function(form, validator) {
+				 var errors = validator.numberOfInvalids();
+				 if (errors) {
+					 alert(validator.errorList[0].message);
+					 validator.errorList[0].element.focus();
+				 }
+			}
+		});
+
+		
+		cmml._masking.numeric("#numbercheck");
+		cmml._masking.currency("#moneycheck","￦");
+		cmml._masking.rrn("#rrncheck");
+		cmml._masking.email("#emailcheck");
+		$(".datepicker-input").datepicker(
+							{
+								todayHighlight: true, 
+								autoclose: true,
+							}
+						).on('changeDate', function(ev)
+								{ 
+									$('.datepicker').hide();
+								});
+		fileuploader();
+				
+	});	
+	
+	function save(){
+		$("#commentForm").valid();
+		
+	}
+	var fileUploader;
+	function fileuploader(){
+	
+		if (fileUploader != null){
+			fileUploader.reset ();
+		}else{
+			fileUploader = new qq.FineUploader({
+	            element: document.getElementById('fine-uploader-validation'),
+	            template: 'qq-template-validation',
+	            request: {
+	            	endpoint: '/admin/common/uploads'
+	            	,method : "POST"
+	            },
+	            thumbnails: {
+	                placeholders: {
+	                    waitingPath: '../images/fineuploader/waiting-generic.png',
+	                    notAvailablePath: '../images/fineuploader/not_available-generic.png'
+	                }
+	            },
+	            validation:{
+	            	allowedExtensions: ['jpg','png'],
+	                itemLimit: 1
+	            },
+	            autoUpload: false,
+	            callbacks: {
+	                onComplete: function(id, name, responseJSON, maybeXhr) {
+			              if(responseJSON.success)
+			              {
+			            	  alert("총 " + responseJSON.message +"건이 등록되어습니다.")			            	  
+			              }
+	              	},
+	              	onCancel: function(id, name) {
+	              	},
+	              	onError: function(id, name, reason, maybeXhrOrXdr) {
+	            	},
+	             	onAllComplete: function(successful, failed) {
+	       			}
+	            }
+	        });
+		}
+	}
+	
+	function unmask(){
+		alert(cmml._masking.unmask("#moneycheck"));
+	}
+	
+	function matchcount(){
+	
+		alert(cmml.matchCount($("#sourceText").val(), $("#findText").val()) + "번 포함됨");
+	}
+	
+	
+	
+	function setCookie(){
+		var key = $("#cookie_key").val();
+		var value = $("#cookie_value").val();
+		cmml.cookie.setCookie(key, value, 1);		
+	}
+	function getCookie(){
+		var key = $("#cookie_key").val();
+		alert(cmml.cookie.getCookie(key));
+		
+	}
+	function allCookie(){
+		alert(cmml.cookie.listCookies());
+	}
+	function delCookie(){
+		var key = $("#cookie_key").val();
+		cmml.cookie.deleteCookie(key);
+	}
+	
+	
+	
+	function setItem(){
+		var key = $("#cookie_key").val();
+		var value = $("#cookie_value").val();
+		cmml.localStorage.setItem(key, value);
+	}
+	function getItem(){
+		var key = $("#cookie_key").val();
+		alert(cmml.localStorage.getItem(key));
+	} 	
+	function removeItem(){
+		var key = $("#cookie_key").val();	
+		cmml.localStorage.removeItem(key);
+	}
+	
+	function showDebug(){
+		cmml.showDebug("username");
+	
+	}
+	
+	function diffDate(){
+		var date1 = $("#datecheck").val();
+		var date2 = $("#datecheck2").val();
+		alert(cmml.date.diff(date1, date2));
+	}
+	function addDate(){
+		var date1 = $("#datecheck").val();
+		$("#datecheck2").val(cmml.date.ISODate(cmml.date.add(date1, 2)));
+	}
+	
+	function setRequired(){
+		cmml.setRequiredMark(".input-required");
+	
+	}
+	
+	function replaceAll(){
+		$("#sourceText").val(cmml.replaceAll($("#sourceText").val(), $("#findText").val(), ""));
+	
+	}
+	var ww;
+	var content = "<script src='js\/jquery.min.js'><\/script><script>"
+		content += "$(function() {"; 
+		content += "	";
+		content += " alert('로딩 완료'); ";
+		content += "});";
+		content += "<\/script> ";
+		/*
+		var content = "<script>"			 
+			content += "	";
+			content += " alert('로딩 완료'); ";			
+			content += "<\/script> ";*/
+	function newwin(){
+		ww = window.open();
+		//ww.document.write('<iframe src="" frameborder="0" id="innerFrame" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+		
+		
+		
+		//var ifr = ww.document.getElementById("innerFrame");
+		
+		//document.getElementById("iframewrapper").innerHTML = "";
+		//document.getElementById("iframewrapper").appendChild(ifr);
+		
+		
+		var newWin = (ww.contentWindow) ? ww.contentWindow : (ww.contentDocument.document) ? ww.contentDocument.document : ww.contentDocument;
+		newWin.document.open();
+		newWin.document.write($("#sssss").val());  
+		newWin.document.close(); 
+		/*
+		ww.onload=function(){
+			//alert("load!");
+			//ww.setHtml(content);
+			//ww.enableExternalCapture();
+			ww.document.write(content);
+			setWin();
+			
+		}
+		*/
+	}
+	function setWin(){
+		
+		$(ww.window.document).ready();
+		
+	}
+	
+	
+</script>
+
+
+</head>
+<body>
+<!-- 각각의 element들은 id, name이 동일해야 한다--->
+	<form id="commentForm" method="get" action="">
+		<fieldset>
+			<p>
+				<label for="">비밀번호</label>				
+				<input id="pwdcheck" name="pwdcheck" type="text" required>				
+			</p>
+			<p>
+				<label for="username">문자열검증수행</label>				
+				<input id="username" name="username" type="text" required>				
+			</p>
+			<p>
+				<label for="numbercheck">숫자검증수행</label>				
+				<input id="numbercheck" name="numbercheck" type="text">				
+			</p>
+			<p>
+				<label for="" class='input-required'>체크박스/라디오버튼</label>				
+				<input id="checkboxcheck" name="checkboxcheck" type="checkbox" value="1"> <label for="checkboxcheck">동의함</label>				
+				<input id="radiocheck" name="radiocheck" type="radio" value="0"> 남
+				<input id="radiocheck" name="radiocheck" type="radio" value="1"> 여
+				
+			</p>
+			<p>
+				<label for="" class='input-required'>콤보박스</label>				
+				<select id="combocheck" name="combocheck">
+					<option value="">선택하세요</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+				</select>
+				
+			</p>
+			<p>
+				<label for="">화페검증</label>				
+				<input id="moneycheck" name="moneycheck" type="text" required>	
+				
+			</p>
+			<p>
+				<label for="">주민번호검증</label>				
+				<input id="rrncheck" name="rrncheck" type="text" required>	
+				
+			</p>
+			<p>
+				<label for="">이메일주소검증</label>				
+				<input id="emailcheck" name="emailcheck" type="text" required>	
+				
+			</p>
+			<p>
+				<label for="">날짜검증</label>				
+				<input id="datecheck" name="datecheck" type="text" class='datepicker-input' data-date-format="yyyy-mm-dd">	
+				<input id="datecheck2" name="datecheck2" type="text" class='datepicker-input' data-date-format="yyyy-mm-dd">	
+				
+			</p>
+			<p>
+				<label for="">파일검증</label>				
+				<div id="fine-uploader-validation"></div>	
+				
+			</p>
+			<p>
+				<label for="">match count</label>				
+				<input id="sourceText" type="text">	/ 
+				<input id="findText" type="text">	
+				
+			</p>
+			<p>
+				<label for="">쿠키/LocalStorage</label>				
+				<input id="cookie_key" type="text">	: 
+				<input id="cookie_value" type="text">	
+				
+			</p>
+			
+		</fieldset>
+	</form>
+	<textarea id="sssss">
+	
+	</textarea>
+	
+<!-- 	
+	<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+$(function(){
+alert("test");
+});
+</script>
+</head>
+
+<body>
+<h1>Hello World!</h1>
+</body>
+
+</html>
+	 -->
+	<input type='button' onclick="newwin()" value="New win">
+	<input type='button' onclick="setWin()" value="set win">
+	<input type='button' onclick="save()" value="Submit">
+	<input type='button' onclick="unmask()" value="unmask">
+	<input type='button' onclick="matchcount()" value="matchcount">
+	<input type='button' onclick="setCookie()" value="setCookie">
+	<input type='button' onclick="getCookie()" value="getCookie">
+	<input type='button' onclick="allCookie()" value="allCookie">
+	<input type='button' onclick="delCookie()" value="delCookie">
+	
+	<input type='button' onclick="setItem()" value="setLocalStorage">
+	<input type='button' onclick="getItem()" value="getLocalStorage">
+	<input type='button' onclick="removeItem()" value="delLocalStorage">
+	<input type='button' onclick="showDebug()" value="showDebug">
+	<input type='button' onclick="diffDate()" value="날짜 차이">
+	<input type='button' onclick="addDate()" value="날짜 더하기">
+	<input type='button' onclick="setRequired()" value="필수 값 필드지정">
+	<input type='button' onclick="replaceAll()" value="replaceAll">
+</body>
+</html>
